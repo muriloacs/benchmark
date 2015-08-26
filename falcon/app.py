@@ -1,19 +1,17 @@
 import falcon
 from images import Resource as ImageResource
-from gevent.server import StreamServer
+from wsgiref import simple_server
 
+# API
+api = application = falcon.API()
 
-def start(socket, address):
-    # API
-    api = application = falcon.API()
+# Resources
+images = ImageResource()
 
-    # Resources
-    images = ImageResource()
+# Routes
+api.add_route('/images', images)
 
-    # Routes
-    api.add_route('/images', images)
-
-
+# Server
 if __name__ == '__main__':
-    server = StreamServer(('127.0.0.1', 8000), start)
-    server.serve_forever()
+    httpd = simple_server.make_server('127.0.0.1', 8000, api)
+    httpd.serve_forever()

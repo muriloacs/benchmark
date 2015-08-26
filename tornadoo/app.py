@@ -1,16 +1,7 @@
 from tornado.ioloop import IOLoop
-from tornado.web import RequestHandler, Application, url
+from tornado.web import Application, url
 from tornado.httpserver import HTTPServer
-
-
-class ImagesHandler(RequestHandler):
-    def get(self):
-        self.write({"message": "Getting Images!"})
-
-    def post(self):
-        self.set_status(201)
-        self.write({"message": "Posting Images!"})
-
+from images import ImagesHandler
 
 
 def make_app():
